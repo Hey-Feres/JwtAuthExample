@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  before_action :set_auth_header
+
   def encode_token(payload)
     JWT.encode(payload, 'Secret Key')
   end
@@ -16,6 +18,10 @@ class ApplicationController < ActionController::API
     rescue JWT::DecodeError
       nil
     end
+  end
+
+  def set_auth_header
+    response.set_header('Auth-Token', auth_header)
   end
 
   def logged_user
