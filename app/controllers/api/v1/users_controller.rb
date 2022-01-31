@@ -1,6 +1,7 @@
 module Api
   module V1
     class UsersController < ApplicationController
+      skip_before_action :set_auth_header, only: %i[signup signin]
       before_action :authorize, only: %i[signedin]
 
       def signup
